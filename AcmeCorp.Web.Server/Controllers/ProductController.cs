@@ -1,6 +1,20 @@
-﻿namespace AcmeCorp.Web.Server.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace AcmeCorp.Web.Server.Controllers
 {
-	public class ProductController
+	[Route("api/[controller]")]
+	[ApiController]
+	public class ProductController : Controller
 	{
+		private readonly IProductService _productService;
+
+		public ProductController(IProductService productService)
+		{
+			_productService = productService;
+		}
+
+		//getall
+
+		//getbyid
 	}
 }

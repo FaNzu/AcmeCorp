@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace AcmeCorp.Libraries.Models
 {
-	internal class Product
+	public class Product
 	{
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public Decimal Price { get; set; }
+		public string ImageURL { get; set; }
+		
 	}
 }

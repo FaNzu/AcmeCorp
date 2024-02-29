@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AcmeCorp.Libraries.Services.Products
 {
-	internal class ProductService
+	public class ProductService : IProductService
 	{
+
 	}
 }
