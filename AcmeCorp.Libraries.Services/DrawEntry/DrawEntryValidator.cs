@@ -14,6 +14,7 @@ namespace AcmeCorp.Libraries.Services.DrawEntry
 		{
 			if (SerialNumber == "valid-serial-number")
 			{
+				//check database for registered keys
 				return true;
 			}
 			else

@@ -24,11 +24,5 @@ namespace AcmeCorp.Libraries.Models
 
 		[Required]
 		public string SerialNumber { get; set; }
-
-		[Required]
-		[Range(18, int.MaxValue)]
-		public int Age { get; set; }
-
-		public DateTime EntryDate { get; set; } = DateTime.UtcNow;
 	}
 }
