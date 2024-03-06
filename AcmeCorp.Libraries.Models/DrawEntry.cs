@@ -24,5 +24,7 @@ namespace AcmeCorp.Libraries.Models
 
 		[Required]
 		public string SerialNumber { get; set; }
-	}
+
+        public int DrawNumberUses { get; set; } = 2; // Property with default value of 2
+    }
 }
