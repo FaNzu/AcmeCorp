@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcmeCorp.Libraries.Models;
+using AcmeCorp.Libraries.Services.Validator;
 using AcmeCorp.Web.Api.Data;
 
 namespace AcmeCorp.Web.Api.Controllers
@@ -15,10 +16,30 @@ namespace AcmeCorp.Web.Api.Controllers
     public class DrawEntriesController : ControllerBase
     {
         private readonly AcmeCorpApiContext _context;
+        private DrawEntryValidator validator = new DrawEntryValidator();
 
         public DrawEntriesController(AcmeCorpApiContext context)
         {
             _context = context;
+        }
+
+        // GET: api/ValidateDrawEntry/AB-012345678
+        [HttpGet]
+        public async Task<ActionResult<bool>> ValidateDrawEntry(string SerialNumber)
+        {
+            if (string.IsNullOrEmpty(SerialNumber))
+            {
+                return BadRequest("Serial number cannot be empty or null.");
+            }
+
+            if (!validator.IsSerialNumberValid(SerialNumber))
+            {
+                return BadRequest("Invalid serial number format. Please use 'AB-12345678' format.");
+            }
+
+            var drawEntryExists = await _context.DrawEntries.AnyAsync(e => e.SerialNumber == SerialNumber);
+
+            return drawEntryExists;
         }
 
         // GET: api/DrawEntries
@@ -32,7 +53,7 @@ namespace AcmeCorp.Web.Api.Controllers
             return await _context.DrawEntries.ToListAsync();
         }
 
-        // GET: api/DrawEntries/5
+        // GET: api/DrawEntry/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DrawEntry>> GetDrawEntry(int id)
         {
@@ -48,37 +69,6 @@ namespace AcmeCorp.Web.Api.Controllers
             }
 
             return drawEntry;
-        }
-
-        // PUT: api/DrawEntries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDrawEntry(int id, DrawEntry drawEntry)
-        {
-            if (id != drawEntry.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(drawEntry).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DrawEntryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/DrawEntries
@@ -116,6 +106,7 @@ namespace AcmeCorp.Web.Api.Controllers
             return NoContent();
         }
 
+        [HttpGet]
         private bool DrawEntryExists(int id)
         {
             return (_context.DrawEntries?.Any(e => e.Id == id)).GetValueOrDefault();
