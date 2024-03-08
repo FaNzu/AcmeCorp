@@ -7,24 +7,15 @@ using System.Threading.Tasks;
 
 namespace AcmeCorp.Libraries.Models
 {
-	public class DrawEntry
+	public class DrawEntryPostViewModel
 	{
-		public DrawEntry() { }
-		public DrawEntry(string firstName, string lastName, string email, int serialnumberId)
+		public DrawEntryPostViewModel() { }
+		public DrawEntryPostViewModel(string firstName, string lastName, string email)
 		{
 			FirstName = firstName;
 			LastName = lastName;
 			Email = email;
-			SerialNumberId = serialnumberId;
 		}
-		public DrawEntry(DrawEntryPostViewModel drawEntryPost)
-		{
-			FirstName = drawEntryPost.FirstName;
-			LastName = drawEntryPost.LastName;
-			Email = drawEntryPost.Email;
-		}
-
-		public int Id { get; set; } // Primary key 
 
 		[Required]
 		public string FirstName { get; set; }
@@ -37,7 +28,6 @@ namespace AcmeCorp.Libraries.Models
 		public string Email { get; set; }
 
 		[Required]
-		public int SerialNumberId { get; set; }
-
-    }
+		public string VoucherKey { get; set; }
+	}
 }

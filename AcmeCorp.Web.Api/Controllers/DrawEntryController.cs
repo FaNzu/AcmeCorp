@@ -19,34 +19,35 @@ namespace AcmeCorp.Web.Api.Controllers
 		}
 
 		
-		[HttpPost]
-		public async Task<ActionResult<DrawEntry>> PostProduct(DrawEntry drawEntry, string voucherKey)
+		[HttpPost("Submit")]
+		public async Task<ActionResult<DrawEntry>> PostProduct(DrawEntryPostViewModel postDrawEntry)
 		{
-			if (_context.Products == null)
+			if (_context.DrawEntries == null)
+			{
+				return NotFound();
+			}
+			if (postDrawEntry == null)
 			{
 				return NotFound();
 			}
 
-
 			var serialNumber = await _context.SerialNumbers
-				.FirstOrDefaultAsync(sn => sn.VoucherKey == voucherKey);
+				.FirstOrDefaultAsync(sn => sn.VoucherKey == postDrawEntry.VoucherKey);
 			
+			//if serialnumber isnt created or has no usage left
 			if (serialNumber == null || serialNumber.DrawNumberUses <= 0)
 			{
 				return BadRequest("Not a valid SerialNumber or theres no usage left");
 			}
 
-			serialNumber.DrawNumberUses -= 1; //make it have 1 less usage
+			serialNumber.DrawNumberUses -= 1;
+			DrawEntry drawEntry = new DrawEntry(postDrawEntry.FirstName, postDrawEntry.LastName, postDrawEntry.Email, serialNumber.Id);
 			drawEntry.SerialNumberId = serialNumber.Id;
-			
 
-			// Add the draw entry to the context and save changes
 			_context.DrawEntries.Add(drawEntry);
 			await _context.SaveChangesAsync();
 
-			// Return the created draw entry
 			return Ok();
-			//return CreatedAtAction("GetProduct", new { id = drawEntry.Id }, drawEntry);
 		}
 
 		[HttpGet("GetEntries")]
@@ -61,33 +62,15 @@ namespace AcmeCorp.Web.Api.Controllers
 			return await _context.DrawEntries.Skip(skip).Take(size).ToListAsync();
 		}
 
-		//// GET: api/Products
-		//[HttpGet]
-		//public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-		//{
-		//	if (_context.Products == null)
-		//	{
-		//		return NotFound();
-		//	}
-		//	return await _context.Products.ToListAsync();
-		//}
-
-		//// GET: api/Products/5
-		//[HttpGet("{id}")]
-		//public async Task<ActionResult<Product>> GetProduct(int id)
-		//{
-		//	if (_context.Products == null)
-		//	{
-		//		return NotFound();
-		//	}
-		//	var product = await _context.Products.FindAsync(id);
-
-		//	if (product == null)
-		//	{
-		//		return NotFound();
-		//	}
-
-		//	return product;
-		//}
+		// GET: api/Products
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<DrawEntry>>> GetProducts()
+		{
+			if (_context.DrawEntries == null)
+			{
+				return NotFound();
+			}
+			return await _context.DrawEntries.ToListAsync();
+		}
 	}
 }

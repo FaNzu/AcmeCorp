@@ -37,4 +37,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//change this in a live setting
+app.UseCors(Options =>
+{
+	Options.AllowAnyOrigin();
+	Options.AllowAnyMethod();
+	Options.AllowAnyHeader();
+});
+
 app.Run();

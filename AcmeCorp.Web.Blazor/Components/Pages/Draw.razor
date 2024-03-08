@@ -3,7 +3,6 @@
 @using AcmeCorp.Libraries.Services.Validator
 @using BlazorBootstrap
 @inject NavigationManager navigationManager
-@* @inject HttpClient httpClient *@
 
 
 @rendermode InteractiveServer
@@ -13,16 +12,15 @@ WIN BIG TODAY
 <input type="text" placeholder="Lastname" name="LastName" @bind="drawEntry.LastName" @bind:event="oninput" />
 <input type="text" placeholder="Email" name="Email" @bind="drawEntry.Email" @bind:event="oninput" />
 <input type="checkbox" @bind="Age" asp-for="IsChecked">
-<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="VoucherKey" @bind:event="oninput" />
+<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="drawEntry.VoucherKey" @bind:event="oninput" />
 
 <button @onclick="AddDrawToServer">Submit</button>
 
 
 @code {
-	public DrawEntry drawEntry = new DrawEntry();
-	public string? VoucherKey { get; set; }
+	public DrawEntryPostViewModel drawEntry = new DrawEntryPostViewModel();
+	public string VoucherKey { get; set; }
 	public bool Age { get; set; }
-	private bool Won { get; set; }
 	private HttpClient httpClient;
 	private SerialNumberValidator serialNumberValidator = new SerialNumberValidator();
 }
@@ -30,10 +28,12 @@ WIN BIG TODAY
 	//button call this method
 	private async void AddDrawToServer()
 	{
-		if (ValidateForm()) //it is a valid serialnumber format
+		if (!ValidateForm()) //it is a valid serialnumber format
 		{
+			httpClient = new HttpClient();
+			// Example: Fetch products from an API
 			// Send the drawEntry object to the server using PostAsJsonAsync
-			var response = await httpClient.PostAsJsonAsync("http://localhost:/api/draw/", drawEntry + VoucherKey);
+			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
 
 			if (response.IsSuccessStatusCode)
 			{

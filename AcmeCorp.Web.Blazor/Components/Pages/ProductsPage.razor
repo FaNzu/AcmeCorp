@@ -1,0 +1,49 @@
+﻿@page "/product"
+@using System.Net.Http.Json;
+@using AcmeCorp.Libraries.Models
+@using BlazorBootstrap
+
+<h3>Product</h3>
+<img src="images/image1.png" />
+@if (Products.Count > 0)
+{
+    @foreach (var product in Products)
+    {
+        <div>
+            <h4>@product.Name</h4>
+            <p>Description: @product.Description</p>
+            <p>Price: @product.Price</p>
+            <!-- Uncomment the line below once you have the ImageURL property in your Product class -->
+            <img src="@product.ImageURL" alt="Product Image" />
+        </div>
+    }
+}
+else
+{
+    <p>No product information available.</p>
+}
+
+@code {
+    // Create a list of Product instances
+    private List<Product> Products = new List<Product>();
+    private HttpClient httpClient;
+
+    // You can initialize the list or load data from an API in the OnInitializedAsync lifecycle method
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync called");
+
+        httpClient = new HttpClient();
+        // Example: Fetch products from an API
+        try
+        {
+            var response = await httpClient.GetFromJsonAsync<List<Product>>("https://localhost:7186/api/Products");
+            Products = response ?? new List<Product>();
+            Console.WriteLine("API request successful");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"API request failed: {ex.Message}");
+        }
+    }
+}
