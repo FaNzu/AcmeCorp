@@ -12,7 +12,7 @@ namespace DrawEntryValidatorTest
         public void GenerateDrawEntry_ShouldGenerateValidEntry()
         {
             // Arrange
-            var validator = new DrawEntryValidator();
+            var validator = new SerialNumberValidator();
 
             // Act
             var generatedEntry = validator.GenerateDrawEntry();
@@ -26,7 +26,7 @@ namespace DrawEntryValidatorTest
         public void GenerateDrawEntry_ShouldGenerateUniqueEntries()
         {
             // Arrange
-            var validator = new DrawEntryValidator();
+            var validator = new SerialNumberValidator();
 
             // Act
             var entry1 = validator.GenerateDrawEntry();
@@ -40,7 +40,7 @@ namespace DrawEntryValidatorTest
         public void IsSerialNumberValid_ShouldReturnFalseForValidEntry()
         {
             // Arrange
-            var validator = new DrawEntryValidator();
+            var validator = new SerialNumberValidator();
             var validEntry = "AB-12345678";
 
             // Act
@@ -54,7 +54,7 @@ namespace DrawEntryValidatorTest
         public void IsSerialNumberValid_ShouldReturnFalseForInvalidEntry()
         {
             // Arrange
-            var validator = new DrawEntryValidator();
+            var validator = new SerialNumberValidator();
             var invalidEntry = "InvalidEntry";
 
             // Act

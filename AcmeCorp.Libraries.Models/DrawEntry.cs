@@ -9,7 +9,13 @@ namespace AcmeCorp.Libraries.Models
 {
 	public class DrawEntry
 	{
-
+		public DrawEntry(string firstName, string lastName, string email)
+		{
+			FirstName = firstName;
+			LastName = lastName;
+			Email = email;
+			SerialNumberId = 0;
+		}
 		public int Id { get; set; } // Primary key 
 
 		[Required]
@@ -23,8 +29,7 @@ namespace AcmeCorp.Libraries.Models
 		public string Email { get; set; }
 
 		[Required]
-		public string SerialNumber { get; set; }
+		public int SerialNumberId { get; set; }
 
-        public int DrawNumberUses { get; set; } = 2; // Property with default value of 2
     }
 }

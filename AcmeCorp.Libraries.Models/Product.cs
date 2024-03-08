@@ -8,7 +8,7 @@ namespace AcmeCorp.Libraries.Models
 {
 	public class Product
 	{
-		public int Sku { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public Decimal Price { get; set; }

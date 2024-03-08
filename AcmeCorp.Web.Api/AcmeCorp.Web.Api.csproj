@@ -23,4 +23,9 @@
     <ProjectReference Include="..\AcmeCorp.Libraries.Services\AcmeCorp.Libraries.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

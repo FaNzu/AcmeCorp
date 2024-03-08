@@ -11,6 +11,7 @@ namespace AcmeCorp.Web.Api.Data
         }
 
         public DbSet<DrawEntry> DrawEntries { get; set; } = default!;
-        //public DbSet<SurfboardApi.Models.Bookings> Bookings { get; set; }
-    }
+		public DbSet<SerialNumber> SerialNumbers { get; set; }
+        public DbSet<Product> Products { get; set; }
+	}
 }

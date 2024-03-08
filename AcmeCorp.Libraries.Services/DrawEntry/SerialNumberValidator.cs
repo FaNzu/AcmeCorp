@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace AcmeCorp.Libraries.Services.Validator
 {
-    public class DrawEntryValidator
+    public class SerialNumberValidator
     {
         public static readonly string SerialNumberFormat = @"^[A-Z]{2}-[0-9]{8}$"; // regular expression for serial number format
 
