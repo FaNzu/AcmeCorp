@@ -2,6 +2,7 @@
 using AcmeCorp.Web.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32.SafeHandles;
 using NuGet.Common;
 
 namespace AcmeCorp.Web.Api.Controllers
@@ -26,19 +27,26 @@ namespace AcmeCorp.Web.Api.Controllers
 				return NotFound();
 			}
 
-			// Check if the SerialNumber exists in the SerialNumbers collection
-			var serialNumberExists = await _context.SerialNumbers.AnyAsync(sn => sn.VoucherKey == voucherKey);
-			if (!serialNumberExists)
+
+			var serialNumber = await _context.SerialNumbers
+				.FirstOrDefaultAsync(sn => sn.VoucherKey == voucherKey);
+			
+			if (serialNumber == null || serialNumber.DrawNumberUses <= 0)
 			{
-				return BadRequest("Not a valid SerialNumber");
+				return BadRequest("Not a valid SerialNumber or theres no usage left");
 			}
+
+			serialNumber.DrawNumberUses -= 1; //make it have 1 less usage
+			drawEntry.SerialNumberId = serialNumber.Id;
+			
 
 			// Add the draw entry to the context and save changes
 			_context.DrawEntries.Add(drawEntry);
 			await _context.SaveChangesAsync();
 
 			// Return the created draw entry
-			return CreatedAtAction("GetProduct", new { id = drawEntry.Id }, drawEntry);
+			return Ok();
+			//return CreatedAtAction("GetProduct", new { id = drawEntry.Id }, drawEntry);
 		}
 
 		[HttpGet("GetEntries")]
