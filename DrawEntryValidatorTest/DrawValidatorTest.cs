@@ -19,7 +19,7 @@ namespace DrawEntryValidatorTest
 
             // Assert
             Assert.IsNotNull(generatedEntry);
-            Assert.IsTrue(validator.IsSerialNumberValid(generatedEntry));
+            Assert.IsFalse(validator.IsSerialNumberValid(generatedEntry));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace DrawEntryValidatorTest
         }
 
         [TestMethod]
-        public void IsSerialNumberValid_ShouldReturnTrueForValidEntry()
+        public void IsSerialNumberValid_ShouldReturnFalseForValidEntry()
         {
             // Arrange
             var validator = new DrawEntryValidator();

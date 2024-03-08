@@ -43,11 +43,15 @@ namespace AcmeCorp.Libraries.Services.Validator
 
         public bool IsSerialNumberValid(string serialNumber)
         {
-            if (string.IsNullOrEmpty(serialNumber) || Regex.IsMatch(serialNumber, SerialNumberFormat))
+            if (string.IsNullOrEmpty(serialNumber))
             {
                 return true;
             }
-            return false;
+            else if (Regex.IsMatch(serialNumber, SerialNumberFormat))
+            {
+                return false;
+            }
+            return true;
         }
     }
     public static class StringExtensions
