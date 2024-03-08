@@ -31,7 +31,6 @@ using (var scope = app.Services.CreateScope()) // Use a scope for seeder
     await seeder.SeedSerialNumbersAsync(); // Seed data with default or custom entry count
     await seeder.SeedProductsAsync();
 }
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

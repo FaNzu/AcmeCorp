@@ -3,7 +3,7 @@
 @using AcmeCorp.Libraries.Services.Validator
 @using BlazorBootstrap
 @inject NavigationManager navigationManager
-@inject HttpClient httpClient
+@* @inject HttpClient httpClient *@
 
 
 @rendermode InteractiveServer
@@ -23,7 +23,7 @@ WIN BIG TODAY
 	public string? VoucherKey { get; set; }
 	public bool Age { get; set; }
 	private bool Won { get; set; }
-
+	private HttpClient httpClient;
 	private SerialNumberValidator serialNumberValidator = new SerialNumberValidator();
 }
 @functions {
