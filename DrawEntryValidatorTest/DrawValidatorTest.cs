@@ -1,6 +1,6 @@
-using AcmeCorp.Libraries.Services.Data;
 using AcmeCorp.Libraries.Models;
 using AcmeCorp.Libraries.Services;
+using AcmeCorp.Libraries.Services.Validator;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrawEntryValidatorTest
@@ -8,33 +8,60 @@ namespace DrawEntryValidatorTest
     [TestClass]
     public class DrawValidatorTest
     {
+        [TestMethod]
+        public void GenerateDrawEntry_ShouldGenerateValidEntry()
+        {
+            // Arrange
+            var validator = new DrawEntryValidator();
 
+            // Act
+            var generatedEntry = validator.GenerateDrawEntry();
 
-        //private AcmeCorpApiContext _dbContext;
+            // Assert
+            Assert.IsNotNull(generatedEntry);
+            Assert.IsTrue(validator.IsSerialNumberValid(generatedEntry));
+        }
 
+        [TestMethod]
+        public void GenerateDrawEntry_ShouldGenerateUniqueEntries()
+        {
+            // Arrange
+            var validator = new DrawEntryValidator();
 
+            // Act
+            var entry1 = validator.GenerateDrawEntry();
+            var entry2 = validator.GenerateDrawEntry();
 
+            // Assert
+            Assert.AreNotEqual(entry1, entry2);
+        }
 
-        //[TestMethod]
-        //public void TestMethod1()
-        //{
-        //    var options = new DbContextOptionsBuilder<AcmeCorpApiContext>()
-        //    .UseSqlServer("AcmeCorpApiContext")
-        //    .Options;
+        [TestMethod]
+        public void IsSerialNumberValid_ShouldReturnTrueForValidEntry()
+        {
+            // Arrange
+            var validator = new DrawEntryValidator();
+            var validEntry = "AB-12345678";
 
-        //    _dbContext = new AcmeCorpApiContext(options);
-        //    _dbContext.Database.EnsureCreated(); // Ensures the database is created for testing
-        //}
+            // Act
+            var isValid = validator.IsSerialNumberValid(validEntry);
 
+            // Assert
+            Assert.IsFalse(isValid);
+        }
 
+        [TestMethod]
+        public void IsSerialNumberValid_ShouldReturnFalseForInvalidEntry()
+        {
+            // Arrange
+            var validator = new DrawEntryValidator();
+            var invalidEntry = "InvalidEntry";
 
+            // Act
+            var isValid = validator.IsSerialNumberValid(invalidEntry);
 
-        //[TestCleanup]
-        //public void TestCleanup()
-        //{
-        //    _dbContext.Database.EnsureDeleted(); // Ensures the database is deleted after testing
-        //    _dbContext.Dispose();
-        //}
-
+            // Assert
+            Assert.IsTrue(isValid);
+        }
     }
 }

@@ -23,8 +23,8 @@ namespace AcmeCorp.Web.Api.Controllers
             _context = context;
         }
 
-        // GET: api/ValidateDrawEntry/AB-012345678
-        [HttpGet]
+        // GET: api/ValidateDrawEntry
+        [HttpGet("ValidateDrawEntries")]
         public async Task<ActionResult<bool>> ValidateDrawEntry(string SerialNumber)
         {
             if (string.IsNullOrEmpty(SerialNumber))
@@ -42,7 +42,7 @@ namespace AcmeCorp.Web.Api.Controllers
             return drawEntryExists;
         }
 
-        // GET: api/DrawEntries
+        // GET: api/GetDrawEntries
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DrawEntry>>> GetDrawEntries()
         {
@@ -80,6 +80,8 @@ namespace AcmeCorp.Web.Api.Controllers
           {
               return Problem("Entity set 'AcmeCorpApiContext.DrawEntries'  is null.");
           }
+            drawEntry.SerialNumber = validator.GenerateDrawEntry();
+          //protect from cross site scripting, only allow posting from store sites.
             _context.DrawEntries.Add(drawEntry);
             await _context.SaveChangesAsync();
 
