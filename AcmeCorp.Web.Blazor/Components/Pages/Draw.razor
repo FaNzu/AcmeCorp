@@ -1,40 +1,61 @@
 ﻿@page "/draw"
 @using AcmeCorp.Libraries.Models
+@using AcmeCorp.Libraries.Services.Validator
 @using BlazorBootstrap
+@inject NavigationManager navigationManager
+@inject HttpClient httpClient
 
 
 @rendermode InteractiveServer
 <h1>draw</h1>
 WIN BIG TODAY
-<input type="text" placeholder="FirstName" name="FirstName" @bind="FirstName" @bind:event="oninput" />
-<input type="text" placeholder="Lastname" name="LastName" @bind="Lastname" @bind:event="oninput" />
-<input type="text" placeholder="Email" name="Email" @bind="Email" @bind:event="oninput" />
+<input type="text" placeholder="FirstName" name="FirstName" @bind="drawEntry.FirstName" @bind:event="oninput" />
+<input type="text" placeholder="Lastname" name="LastName" @bind="drawEntry.LastName" @bind:event="oninput" />
+<input type="text" placeholder="Email" name="Email" @bind="drawEntry.Email" @bind:event="oninput" />
 <input type="checkbox" @bind="Age" asp-for="IsChecked">
-<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="VoucherKey" @bind:event="oninput"/>
-<ConfirmDialog @ref="dialog" />
-<Button Color="ButtonColor.Primary" @onclick="ShowConfirmationAsync">Show Modal</Button>
+<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="VoucherKey" @bind:event="oninput" />
+
+<button @onclick="AddDrawToServer">Submit</button>
 
 
 @code {
-    public string? FirstName { get; set; }
-    public string? Lastname { get; set; }
-    public string? Email { get; set; }
-    public int? VoucherKey { get; set; }
-    public bool Age { get; set; }
-    
-    private ConfirmDialog dialog = default!;
-}
-@functions{
-    private async Task ShowConfirmationAsync()
-    {
-        var confirmation = await dialog.ShowAsync(
-            title: "Are you sure you want to buy this?",
-            message1: "This will put the item in the shopping cart",
-            message2: "Do you want to proceed?");
+	public DrawEntry drawEntry = new DrawEntry();
+	public string? VoucherKey { get; set; }
+	public bool Age { get; set; }
+	private bool Won { get; set; }
 
-        if (confirmation && Age)
-        {
-            
-        }
-    }
+	private SerialNumberValidator serialNumberValidator = new SerialNumberValidator();
+}
+@functions {
+	//button call this method
+	private async void AddDrawToServer()
+	{
+		if (ValidateForm()) //it is a valid serialnumber format
+		{
+			// Send the drawEntry object to the server using PostAsJsonAsync
+			var response = await httpClient.PostAsJsonAsync("http://localhost:/api/draw/", drawEntry + VoucherKey);
+
+			if (response.IsSuccessStatusCode)
+			{
+				navigationManager.NavigateTo("/Won");
+			}
+			else
+			{
+				// Handle the case where the server request was not successful
+
+			}
+			navigationManager.NavigateTo("/home");
+		}
+	}
+	private bool ValidateForm()
+	{
+		if (!serialNumberValidator.IsSerialNumberValid(VoucherKey))
+		{
+			return true;
+		}
+		else
+		{ 
+			return false; 
+		}
+	}
 }

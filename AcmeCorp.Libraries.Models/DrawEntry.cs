@@ -9,6 +9,7 @@ namespace AcmeCorp.Libraries.Models
 {
 	public class DrawEntry
 	{
+		public DrawEntry() { }
 		public DrawEntry(string firstName, string lastName, string email)
 		{
 			FirstName = firstName;

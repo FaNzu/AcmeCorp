@@ -41,7 +41,7 @@ namespace AcmeCorp.Libraries.Services.Validator
             return $"{randomLetters}-{randomNumbers}";
         }
 
-        public bool IsSerialNumberValid(string serialNumber)
+        public bool IsSerialNumberValid(string? serialNumber)
         {
             if (string.IsNullOrEmpty(serialNumber))
             {
