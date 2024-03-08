@@ -28,7 +28,8 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope()) // Use a scope for seeder
 {
     var seeder = scope.ServiceProvider.GetRequiredService<AcmeCorpApiSeeder>();
-    await seeder.SeedAsync(); // Seed data with default or custom entry count
+    await seeder.SeedSerialNumbersAsync(); // Seed data with default or custom entry count
+    await seeder.SeedProductsAsync();
 }
 
 app.UseHttpsRedirection();

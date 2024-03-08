@@ -1,7 +1,40 @@
 ﻿@page "/draw"
+@using AcmeCorp.Libraries.Models
+@using BlazorBootstrap
+
+
 @rendermode InteractiveServer
-<h3>draw</h3>
+<h1>draw</h1>
+WIN BIG TODAY
+<input type="text" placeholder="FirstName" name="FirstName" @bind="FirstName" @bind:event="oninput" />
+<input type="text" placeholder="Lastname" name="LastName" @bind="Lastname" @bind:event="oninput" />
+<input type="text" placeholder="Email" name="Email" @bind="Email" @bind:event="oninput" />
+<input type="checkbox" @bind="Age" asp-for="IsChecked">
+<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="VoucherKey" @bind:event="oninput"/>
+<ConfirmDialog @ref="dialog" />
+<Button Color="ButtonColor.Primary" @onclick="ShowConfirmationAsync">Show Modal</Button>
+
 
 @code {
+    public string? FirstName { get; set; }
+    public string? Lastname { get; set; }
+    public string? Email { get; set; }
+    public int? VoucherKey { get; set; }
+    public bool Age { get; set; }
+    
+    private ConfirmDialog dialog = default!;
+}
+@functions{
+    private async Task ShowConfirmationAsync()
+    {
+        var confirmation = await dialog.ShowAsync(
+            title: "Are you sure you want to buy this?",
+            message1: "This will put the item in the shopping cart",
+            message2: "Do you want to proceed?");
 
+        if (confirmation && Age)
+        {
+            
+        }
+    }
 }

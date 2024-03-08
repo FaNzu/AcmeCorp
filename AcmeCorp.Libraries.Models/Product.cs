@@ -13,6 +13,13 @@ namespace AcmeCorp.Libraries.Models
 		public string Description { get; set; }
 		public Decimal Price { get; set; }
 		public string ImageURL { get; set; }
-		
+
+		public Product(string name, string description, decimal price, string imageURL)
+		{
+			Name = name;
+			Description = description;
+			Price = price;
+			ImageURL = imageURL;
+		}
 	}
 }
