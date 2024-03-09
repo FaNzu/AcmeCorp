@@ -9,14 +9,6 @@ namespace AcmeCorp.Libraries.Models
 {
 	public class DrawEntryPostViewModel
 	{
-		public DrawEntryPostViewModel() { }
-		public DrawEntryPostViewModel(string firstName, string lastName, string email)
-		{
-			FirstName = firstName;
-			LastName = lastName;
-			Email = email;
-		}
-
 		[Required]
 		public string FirstName { get; set; }
 
@@ -24,7 +16,6 @@ namespace AcmeCorp.Libraries.Models
 		public string LastName { get; set; }
 
 		[Required]
-		[EmailAddress]
 		public string Email { get; set; }
 
 		[Required]

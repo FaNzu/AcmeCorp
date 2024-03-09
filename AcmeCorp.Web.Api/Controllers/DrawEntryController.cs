@@ -18,36 +18,45 @@ namespace AcmeCorp.Web.Api.Controllers
 			_context = context;
 		}
 
-		
 		[HttpPost("Submit")]
 		public async Task<ActionResult<DrawEntry>> PostProduct(DrawEntryPostViewModel postDrawEntry)
 		{
-			if (_context.DrawEntries == null)
+			Console.WriteLine("PostProduct method called.");
+			try
 			{
-				return NotFound();
+				// ... rest of the code
+				if (_context.DrawEntries == null)
+				{
+					return NotFound();
+				}
+				if (postDrawEntry == null)
+				{
+					return NotFound();
+				}
+
+				var serialNumber = await _context.SerialNumbers
+					.FirstOrDefaultAsync(sn => sn.VoucherKey == postDrawEntry.VoucherKey);
+
+				//if serialnumber isnt created or has no usage left
+				if (serialNumber == null || serialNumber.DrawNumberUses <= 0)
+				{
+					return BadRequest("Not a valid SerialNumber or theres no usage left");
+				}
+
+				serialNumber.DrawNumberUses -= 1;
+				DrawEntry drawEntry = new DrawEntry(postDrawEntry.FirstName, postDrawEntry.LastName, postDrawEntry.Email, serialNumber.Id);
+				drawEntry.SerialNumberId = serialNumber.Id;
+
+				_context.DrawEntries.Add(drawEntry);
+				await _context.SaveChangesAsync();
+
+				return Ok();
 			}
-			if (postDrawEntry == null)
+			catch (Exception ex)
 			{
-				return NotFound();
+				Console.WriteLine($"Exception in postDrawEntry: {ex.Message}");
+				return StatusCode(500, "Internal Server Error");
 			}
-
-			var serialNumber = await _context.SerialNumbers
-				.FirstOrDefaultAsync(sn => sn.VoucherKey == postDrawEntry.VoucherKey);
-			
-			//if serialnumber isnt created or has no usage left
-			if (serialNumber == null || serialNumber.DrawNumberUses <= 0)
-			{
-				return BadRequest("Not a valid SerialNumber or theres no usage left");
-			}
-
-			serialNumber.DrawNumberUses -= 1;
-			DrawEntry drawEntry = new DrawEntry(postDrawEntry.FirstName, postDrawEntry.LastName, postDrawEntry.Email, serialNumber.Id);
-			drawEntry.SerialNumberId = serialNumber.Id;
-
-			_context.DrawEntries.Add(drawEntry);
-			await _context.SaveChangesAsync();
-
-			return Ok();
 		}
 
 		[HttpGet("GetEntries")]
@@ -71,6 +80,13 @@ namespace AcmeCorp.Web.Api.Controllers
 				return NotFound();
 			}
 			return await _context.DrawEntries.ToListAsync();
+		}
+
+		// Change to post, only get for testing purposes
+		[HttpGet("Login")]
+		public async Task<ActionResult<IEnumerable<DrawEntry>>> GetLogin()
+		{
+			return Ok();
 		}
 	}
 }

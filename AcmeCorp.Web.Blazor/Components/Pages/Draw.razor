@@ -1,6 +1,8 @@
 ﻿@page "/draw"
 @using AcmeCorp.Libraries.Models
 @using AcmeCorp.Libraries.Services.Validator
+@using System.Text.Json;
+@using System.Text;
 @using BlazorBootstrap
 @inject NavigationManager navigationManager
 
@@ -9,11 +11,11 @@
 <h1>draw</h1>
 WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 <ul>
-	<li><input type="text" placeholder="FirstName" name="FirstName" @bind="drawEntry.FirstName" @bind:event="oninput" /></li>
-	<li><input type="text" placeholder="Lastname" name="LastName" @bind="drawEntry.LastName" @bind:event="oninput" /></li>
-	<li><input type="text" placeholder="Email" name="Email" @bind="drawEntry.Email" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="FirstName" name="FirstName" @bind="postDrawEntry.FirstName" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="Lastname" name="LastName" @bind="postDrawEntry.LastName" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="Email" name="Email" @bind="postDrawEntry.Email" @bind:event="oninput" /></li>
 	<li>Are you over 18?: <input type="checkbox" @bind="Age" asp-for="IsChecked"></li>
-	<li><input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="drawEntry.VoucherKey" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="postDrawEntry.VoucherKey" @bind:event="oninput" /></li>
 </ul>
 <button @onclick="AddDrawToServer">Submit</button>
 <br />
@@ -25,7 +27,7 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 
 
 @code {
-	public DrawEntryPostViewModel drawEntry = new DrawEntryPostViewModel();
+	public DrawEntryPostViewModel postDrawEntry = new DrawEntryPostViewModel();
 	private HttpClient httpClient;
 	private SerialNumberValidator serialNumberValidator = new SerialNumberValidator();
 	// public string VoucherKey { get; set; }
@@ -36,15 +38,14 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 	private string? LoginResponse { get; set; }
 }
 @functions {
-	private async void AddDrawToServer()
+	private async Task AddDrawToServer()
 	{
 		if (ValidateForm()) //it is a valid serialnumber format
 		{
 			httpClient = new HttpClient();
 
 			// Sending the drawEntry object to the server using PostAsJsonAsync
-			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
-			// var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
+			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", postDrawEntry);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -58,7 +59,7 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 	}
 	private bool ValidateForm()
 	{
-		if (!serialNumberValidator.IsSerialNumberValid(drawEntry.VoucherKey))
+		if (!serialNumberValidator.IsSerialNumberValid(postDrawEntry.VoucherKey))
 		{
 			return true;
 		}
@@ -74,7 +75,7 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 		{
 			httpClient = new HttpClient();
 
-			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Login", drawEntry);
+			var response = await httpClient.GetAsync("https://localhost:7186/api/DrawEntry/Login");
 
 			if (response.IsSuccessStatusCode)
 			{
