@@ -38,12 +38,13 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 @functions {
 	private async void AddDrawToServer()
 	{
-		if (!ValidateForm()) //it is a valid serialnumber format
+		if (ValidateForm()) //it is a valid serialnumber format
 		{
 			httpClient = new HttpClient();
 
 			// Sending the drawEntry object to the server using PostAsJsonAsync
 			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
+			// var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
 
 			if (response.IsSuccessStatusCode)
 			{
