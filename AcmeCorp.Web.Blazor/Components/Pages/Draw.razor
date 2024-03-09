@@ -7,32 +7,42 @@
 
 @rendermode InteractiveServer
 <h1>draw</h1>
-WIN BIG TODAY
-<input type="text" placeholder="FirstName" name="FirstName" @bind="drawEntry.FirstName" @bind:event="oninput" />
-<input type="text" placeholder="Lastname" name="LastName" @bind="drawEntry.LastName" @bind:event="oninput" />
-<input type="text" placeholder="Email" name="Email" @bind="drawEntry.Email" @bind:event="oninput" />
-<input type="checkbox" @bind="Age" asp-for="IsChecked">
-<input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="drawEntry.VoucherKey" @bind:event="oninput" />
-
+WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
+<ul>
+	<li><input type="text" placeholder="FirstName" name="FirstName" @bind="drawEntry.FirstName" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="Lastname" name="LastName" @bind="drawEntry.LastName" @bind:event="oninput" /></li>
+	<li><input type="text" placeholder="Email" name="Email" @bind="drawEntry.Email" @bind:event="oninput" /></li>
+	<li>Are you over 18?: <input type="checkbox" @bind="Age" asp-for="IsChecked"></li>
+	<li><input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="drawEntry.VoucherKey" @bind:event="oninput" /></li>
+</ul>
 <button @onclick="AddDrawToServer">Submit</button>
+<br />
+<br />
+<input type="text" placeholder="Admin" name="Admin" @bind="LoginName" @bind:event="oninput" />
+<input type="text" placeholder="Password" name="Password" @bind="Password" @bind:event="oninput" />
+<button @onclick="LoginToServer">Login to view DrawEntry entries</button>
+<p>@LoginResponse</p>
 
 
 @code {
 	public DrawEntryPostViewModel drawEntry = new DrawEntryPostViewModel();
-	public string VoucherKey { get; set; }
-	public bool Age { get; set; }
 	private HttpClient httpClient;
 	private SerialNumberValidator serialNumberValidator = new SerialNumberValidator();
+	// public string VoucherKey { get; set; }
+	public bool Age { get; set; }
+
+	private string? LoginName { get; set; }
+	private string? Password { get; set; }
+	private string? LoginResponse { get; set; }
 }
 @functions {
-	//button call this method
 	private async void AddDrawToServer()
 	{
 		if (!ValidateForm()) //it is a valid serialnumber format
 		{
 			httpClient = new HttpClient();
-			// Example: Fetch products from an API
-			// Send the drawEntry object to the server using PostAsJsonAsync
+
+			// Sending the drawEntry object to the server using PostAsJsonAsync
 			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Submit", drawEntry);
 
 			if (response.IsSuccessStatusCode)
@@ -41,21 +51,38 @@ WIN BIG TODAY
 			}
 			else
 			{
-				// Handle the case where the server request was not successful
-
+				navigationManager.NavigateTo("/Lost");
 			}
-			navigationManager.NavigateTo("/home");
 		}
 	}
 	private bool ValidateForm()
 	{
-		if (!serialNumberValidator.IsSerialNumberValid(VoucherKey))
+		if (!serialNumberValidator.IsSerialNumberValid(drawEntry.VoucherKey))
 		{
 			return true;
 		}
 		else
 		{ 
 			return false; 
+		}
+	}
+
+	public async void LoginToServer()
+	{
+		if(string.IsNullOrEmpty(Password) && string.IsNullOrEmpty(LoginName))
+		{
+			httpClient = new HttpClient();
+
+			var response = await httpClient.PostAsJsonAsync("https://localhost:7186/api/DrawEntry/Login", drawEntry);
+
+			if (response.IsSuccessStatusCode)
+			{
+				navigationManager.NavigateTo("/DrawEntries");
+			}
+			else
+			{
+				LoginResponse = "Unable to verify your login";				
+			}
 		}
 	}
 }
