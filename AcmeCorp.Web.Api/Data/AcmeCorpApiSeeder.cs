@@ -12,18 +12,21 @@ namespace AcmeCorp.Web.Api.Data
 			_context = context;
 		}
 
-		public async Task SeedSerialNumbersAsync(int serialNumberCount = 100) // Optional parameter
+		public async Task SeedSerialNumbersAsync(int serialNumberCount = 100)
 		{
-			// Check if any data exists (optional)
 			if (!_context.SerialNumbers.Any())
 			{
 				var drawEntryValidator = new SerialNumberValidator();
+				var filePath = "serialnumbers.txt";
 
-				// Generate and add data to the context
-				for (int i = 0; i < serialNumberCount; i++)
+				using (StreamWriter writer = new StreamWriter(filePath))
 				{
-					var voucherKey = drawEntryValidator.GenerateDrawEntry(); // Assuming it returns a string
-					_context.SerialNumbers.Add(new SerialNumber(voucherKey));
+					for (int i = 0; i < serialNumberCount; i++)
+					{
+						var voucherKey = drawEntryValidator.GenerateDrawEntry();
+						_context.SerialNumbers.Add(new SerialNumber(voucherKey));
+						await writer.WriteLineAsync(voucherKey);
+					}
 				}
 
 				await _context.SaveChangesAsync();
