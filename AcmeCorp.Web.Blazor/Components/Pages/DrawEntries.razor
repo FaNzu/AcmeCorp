@@ -1,0 +1,56 @@
+﻿@page "/DrawEntries"
+@using AcmeCorp.Libraries.Models
+@using System.Text.Json;
+@using BlazorBootstrap
+
+<h3>DrawEntries</h3>
+@if (drawEntries.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>SerialNumberId</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in drawEntries)
+            {
+                <tr>
+                    <td>@entry.Id</td>
+                    <td>@entry.FirstName</td>
+                    <td>@entry.LastName</td>
+                    <td>@entry.Email</td>
+                    <td>@entry.SerialNumberId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private HttpClient httpClient;
+    private List<DrawEntry> drawEntries = new List<DrawEntry>();
+}
+@functions{
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync called");
+
+        httpClient = new HttpClient();
+        try
+        {
+            var response = await httpClient.GetFromJsonAsync<List<DrawEntry>>("https://localhost:7186/api/DrawEntry/");
+            drawEntries = response ?? new List<DrawEntry>();
+            Console.WriteLine("API request successful");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"API request failed: {ex.Message}");
+        }
+    }
+}

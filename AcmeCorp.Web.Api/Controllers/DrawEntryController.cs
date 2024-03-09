@@ -73,7 +73,7 @@ namespace AcmeCorp.Web.Api.Controllers
 
 		// GET: api/Products
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<DrawEntry>>> GetProducts()
+		public async Task<ActionResult<IEnumerable<DrawEntry>>> GetDrawEntries()
 		{
 			if (_context.DrawEntries == null)
 			{
@@ -83,10 +83,30 @@ namespace AcmeCorp.Web.Api.Controllers
 		}
 
 		// Change to post, only get for testing purposes
-		[HttpGet("Login")]
-		public async Task<ActionResult<IEnumerable<DrawEntry>>> GetLogin()
+		[HttpPost("Login")]
+		public async Task<ActionResult<IEnumerable<DrawEntry>>> PostLogin(PostLoginModel postLoginModel)
 		{
-			return Ok();
+			Console.WriteLine("GetLogin method called.");
+			try
+			{
+				if (postLoginModel.loginName == null || postLoginModel.password == null)
+				{
+					return NotFound();
+				}
+
+				//if serialnumber isnt created or has no usage left
+				if (postLoginModel.loginName == "admin" || postLoginModel.password == "admin")
+				{
+					return Ok();
+				}
+
+				return BadRequest("Login not correct");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Exception in Login: {ex.Message}");
+				return StatusCode(500, "Internal Server Error");
+			}
 		}
 	}
 }

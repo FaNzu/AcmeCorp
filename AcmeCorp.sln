@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcmeCorp.Libraries.Models",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcmeCorp.Web.Api", "AcmeCorp.Web.Api\AcmeCorp.Web.Api.csproj", "{C865F031-B89C-42C0-8D6D-1AFCFE2BE56F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawEntryValidatorTest", "DrawEntryValidatorTest\DrawEntryValidatorTest.csproj", "{0BF167B3-3C1E-454C-9BDB-46167391B942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawEntryValidatorTest", "DrawEntryValidatorTest\DrawEntryValidatorTest.csproj", "{0BF167B3-3C1E-454C-9BDB-46167391B942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeCorp.Web.Blazor", "AcmeCorp.Web.Blazor\AcmeCorp.Web.Blazor.csproj", "{AD4D20DD-5AFC-462A-8869-C8460EAEC897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcmeCorp.Web.Blazor", "AcmeCorp.Web.Blazor\AcmeCorp.Web.Blazor.csproj", "{AD4D20DD-5AFC-462A-8869-C8460EAEC897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,7 +13,6 @@
             <h4>@product.Name</h4>
             <p>Description: @product.Description</p>
             <p>Price: @product.Price</p>
-            <!-- Uncomment the line below once you have the ImageURL property in your Product class -->
             <img src="@product.ImageURL" alt="Product Image" />
         </div>
     }
@@ -24,17 +23,14 @@ else
 }
 
 @code {
-    // Create a list of Product instances
     private List<Product> Products = new List<Product>();
     private HttpClient httpClient;
 
-    // You can initialize the list or load data from an API in the OnInitializedAsync lifecycle method
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("OnInitializedAsync called");
 
         httpClient = new HttpClient();
-        // Example: Fetch products from an API
         try
         {
             var response = await httpClient.GetFromJsonAsync<List<Product>>("https://localhost:7186/api/Products");
