@@ -82,7 +82,6 @@ namespace AcmeCorp.Web.Api.Controllers
 			return await _context.DrawEntries.ToListAsync();
 		}
 
-		// Change to post, only get for testing purposes
 		[HttpPost("Login")]
 		public async Task<ActionResult<IEnumerable<DrawEntry>>> PostLogin(PostLoginModel postLoginModel)
 		{
@@ -94,7 +93,7 @@ namespace AcmeCorp.Web.Api.Controllers
 					return NotFound();
 				}
 
-				//if serialnumber isnt created or has no usage left
+				//very secure login :D
 				if (postLoginModel.loginName == "admin" || postLoginModel.password == "admin")
 				{
 					return Ok();

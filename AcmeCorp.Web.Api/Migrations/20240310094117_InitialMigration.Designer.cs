@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcmeCorp.Web.Api.Migrations
 {
     [DbContext(typeof(AcmeCorpApiContext))]
-    [Migration("20240308095454_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240310094117_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,8 +72,8 @@ namespace AcmeCorp.Web.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

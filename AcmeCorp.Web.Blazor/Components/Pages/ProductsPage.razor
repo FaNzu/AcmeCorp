@@ -4,16 +4,17 @@
 @using BlazorBootstrap
 
 <h3>Product</h3>
-<img src="images/image1.png" />
 @if (Products.Count > 0)
 {
-    @foreach (var product in Products)
+    @for (int i = 0; i < Products.Count; i++)
     {
+        var product = Products[i];
         <div>
             <h4>@product.Name</h4>
             <p>Description: @product.Description</p>
-            <p>Price: @product.Price</p>
-            <img src="@product.ImageURL" alt="Product Image" />
+            <p>Price: @Math.Round(product.Price, 2)</p>
+            <img src="images/@product.ImageURL" alt="Product Image" />
+            <br /><br />
         </div>
     }
 }

@@ -32,8 +32,8 @@ namespace AcmeCorp.Libraries.Models
 		[Required]
 		public string LastName { get; set; }
 
+		//[EmailAddress]
 		[Required]
-		[EmailAddress]
 		public string Email { get; set; }
 
 		[Required]

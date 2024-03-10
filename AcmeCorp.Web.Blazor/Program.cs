@@ -19,7 +19,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-//app.UseStaticFiles();
+app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
