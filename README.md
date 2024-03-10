@@ -26,7 +26,7 @@ When running the project for the first time, itll generate the serial numbers an
 
 ### Step 1: Open NuGet Package Manager Console
 
-![image](./READMEPicture1.png)
+![picture1](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture1.PNG)
 Open the NuGet Package Manager Console and run the following commands:
 
 ### Step 2: Update Database
@@ -35,7 +35,7 @@ Run the following command to apply the migration and update the database:
 
 > Make sure the project applying too is the AcmeCorp.Web.Api project.
 
-![image](./READMEPicture2.png)
+![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture2.PNG)
 
 Command: `Update-Database`
 
