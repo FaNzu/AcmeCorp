@@ -45,8 +45,16 @@ Command: `Update-Database`
 
 This creates the database and applies the migration.
 
-### Step 3: Checkout the Serial Numbers
+### Step 3: Start the right projects
+In the top, click on the drop down menu at the START button. And select the configure startup projects.
+![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture3.PNG)
+
+and click on multiple startup projects, and start both 'AcmeCorp.Web.Api' and 'AcmeCorp.Web.Blazor'. click apply and ok
+
+### Step 5: Start the projects!
+
+### Step 4: Checkout the Serial Numbers
 
 look at `serialnumbers.txt` file in the `AcmeCorp.Web.Api/Data` folder. This file should contain the initial serial numbers for the draw.
 
-### Step 4: run the unit tests :D
+### Step 5: run the unit tests :D
