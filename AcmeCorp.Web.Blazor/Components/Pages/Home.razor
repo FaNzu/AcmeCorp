@@ -1,37 +1,29 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
+<header>
+    <h1>Welcome to Acme Corporation</h1>
+</header>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-@page "/show-image-1"
-
-<PageTitle>Show Image 1</PageTitle>
-
-<h1>Show Image Example 1</h1>
-
-@if (imageSource is not null)
-{
-    <p>
-        <img src="@imageSource" />
-    </p>
-}
+<section>
+    <p>Explore our innovative products and enter our draw for a chance to win exciting prizes!</p>
+    <p>To participate, you must have a valid serial number from purchasing one of our products.</p>
+    <p>You can enter the draw twice for every valid serial number. Participants must be at least 18 years old.</p>
+</section>
 
 @for (var i = 1; i <= 3; i++)
 {
-    var imageId = i;
+    @* var imageId = i;
     <button @onclick="() => ShowImage(imageId)">
         Image @imageId
-    </button>
+    </button> *@
 }
 
 @code {
-    private string? imageSource;
+    // private string? imageSource;
 
-    private void ShowImage(int id)
-    {
-        imageSource = $"images/image{id}.png";
-    }
+    // private void ShowImage(int id)
+    // {
+    //     imageSource = $"images/image{id}.png";
+    // }
 }

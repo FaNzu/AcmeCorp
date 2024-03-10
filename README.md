@@ -17,11 +17,6 @@ The project includes:
 	
 When running the project for the first time, itll generate the serial numbers and save them in the database. And a copy in AcmeCorp.Web.Api/Data in a txt file to easily test and debug. Itll also save some products in the data base. To see see what is generated check out AcmeCorp.Web.Api/Data/AcmeCorpApiSeeder.cs
 
-## Idea for the project
-I found the company from the Road Runner series, and thought they would make a good subject for a new test website. 
-The site needed to be able to send a serial number to enter a draw. Which i took some inspiration from the taiwan lottery system, where reciepts have a "Lottery Number".
-![picture1](https://github.com/FaNzu/AcmeCorp/blob/main/taiwan_receipt.webp)
-
 ## Project Setup Guide
 ### Prerequisites
 
@@ -31,7 +26,7 @@ The site needed to be able to send a serial number to enter a draw. Which i took
 
 ### Step 1: Open NuGet Package Manager Console
 
-![picture1](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture1.PNG)
+![image](./READMEPicture1.png)
 Open the NuGet Package Manager Console and run the following commands:
 
 ### Step 2: Update Database
@@ -40,7 +35,7 @@ Run the following command to apply the migration and update the database:
 
 > Make sure the project applying too is the AcmeCorp.Web.Api project.
 
-![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture2.PNG)
+![image](./READMEPicture2.png)
 
 Command: `Update-Database`
 

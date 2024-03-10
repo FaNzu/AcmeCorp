@@ -5,11 +5,18 @@
 @using System.Text;
 @using BlazorBootstrap
 @inject NavigationManager navigationManager
-
-
 @rendermode InteractiveServer
-<h1>draw</h1>
-WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
+
+<header>
+	<h1>Enter the Draw</h1>
+</header>
+
+<section>
+	<p>Use your valid serial number to enter the draw and stand a chance to win amazing prizes!</p>
+	<p>You can enter the draw twice for every valid serial number.</p>
+	<p>Make sure you meet the eligibility criteria before participating.</p>
+</section>
+
 <ul>
 	<li><input type="text" placeholder="FirstName" name="FirstName" @bind="postDrawEntry.FirstName" @bind:event="oninput" /></li>
 	<li><input type="text" placeholder="Lastname" name="LastName" @bind="postDrawEntry.LastName" @bind:event="oninput" /></li>
@@ -17,13 +24,12 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 	<li>Are you over 18?: <input type="checkbox" @bind="Age" asp-for="IsChecked"></li>
 	<li><input type="text" placeholder="SerialNumber" name="SerialNumber" @bind="postDrawEntry.VoucherKey" @bind:event="oninput" /></li>
 </ul>
-<button @onclick="AddDrawToServer">Submit</button>
-<br />
-<br />
-<input type="text" placeholder="Admin" name="Admin" @bind="postLoginModel.loginName" @bind:event="oninput" />
+
+<button @onclick="AddDrawToServer">Submit</button> <br /><br />
+
+<input type="text" placeholder="name" name="name" @bind="postLoginModel.loginName" @bind:event="oninput" />
 <input type="text" placeholder="Password" name="Password" @bind="postLoginModel.password" @bind:event="oninput" />
 <button @onclick="LoginToServer">Login to view DrawEntry entries</button>
-<p>@LoginResponse</p>
 
 
 @code {
@@ -34,7 +40,6 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 	public bool Age { get; set; }
 
 	private PostLoginModel postLoginModel = new PostLoginModel();
-	private string? LoginResponse { get; set; }
 }
 @functions {
 	private async Task AddDrawToServer()
@@ -79,10 +84,6 @@ WIN BIG TODAY BY ENTERING WITH YOUR SERIALNUMBER FROM YOUR RECEIPT
 			if (response.IsSuccessStatusCode)
 			{
 				navigationManager.NavigateTo("/DrawEntries");
-			}
-			else
-			{
-				LoginResponse = "Unable to verify your login";				
 			}
 		}
 	}

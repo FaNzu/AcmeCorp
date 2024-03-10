@@ -3,7 +3,16 @@
 @using AcmeCorp.Libraries.Models
 @using BlazorBootstrap
 
-<h3>Product</h3>
+<header>
+    <h1>Explore Acme Corporation's Products</h1>
+</header>
+
+<section>
+    <p>Discover our wide range of innovative products that cater to your needs.</p>
+    <p>Every product comes with a unique serial number for draw participation.</p>
+    <p>Explore now and enhance your lifestyle with Acme Corporation!</p>
+</section>
+
 @if (Products.Count > 0)
 {
     @for (int i = 0; i < Products.Count; i++)
