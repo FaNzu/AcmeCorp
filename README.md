@@ -17,6 +17,12 @@ The project includes:
 	
 When running the project for the first time, itll generate the serial numbers and save them in the database. And a copy in AcmeCorp.Web.Api/Data in a txt file to easily test and debug. Itll also save some products in the data base. To see see what is generated check out AcmeCorp.Web.Api/Data/AcmeCorpApiSeeder.cs
 
+
+## Idea for the project
+I found the company from the Road Runner series, and thought they would make a good subject for a new test website. 
+The site needed to be able to send a serial number to enter a draw. Which i took some inspiration from the taiwan lottery system, where reciepts have a "Lottery Number".
+![picture1](https://github.com/FaNzu/AcmeCorp/blob/main/taiwan_receipt.webp)
+
 ## Project Setup Guide
 ### Prerequisites
 
@@ -26,23 +32,29 @@ When running the project for the first time, itll generate the serial numbers an
 
 ### Step 1: Open NuGet Package Manager Console
 
-![image](./READMEPicture1.png)
+![picture1](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture1.PNG)
 Open the NuGet Package Manager Console and run the following commands:
 
 ### Step 2: Update Database
-
 Run the following command to apply the migration and update the database:
 
 > Make sure the project applying too is the AcmeCorp.Web.Api project.
-
-![image](./READMEPicture2.png)
+![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture2.PNG)
 
 Command: `Update-Database`
 
 This creates the database and applies the migration.
 
-### Step 3: Checkout the Serial Numbers
+### Step 3: Start the right projects
+In the top, click on the drop down menu at the START button. And select the configure startup projects.
+![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture3.PNG)
+
+and click on multiple startup projects, and start both 'AcmeCorp.Web.Api' and 'AcmeCorp.Web.Blazor'. click apply and ok
+
+### Step 5: Start the projects!
+
+### Step 4: Checkout the Serial Numbers
 
 look at `serialnumbers.txt` file in the `AcmeCorp.Web.Api/Data` folder. This file should contain the initial serial numbers for the draw.
 
-### Step 4: run the unit tests :D
+### Step 5: run the unit tests :D
