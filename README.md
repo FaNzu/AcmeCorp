@@ -42,6 +42,7 @@ Run the following command to apply the migration and update the database:
 ![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture2.PNG)
 
 Command: `Update-Database`
+
 This creates the database and applies the migration.
 
 ### Step 3: Checkout the Serial Numbers
