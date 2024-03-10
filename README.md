@@ -47,7 +47,7 @@ This creates the database and applies the migration.
 
 ### Step 3: Start the right projects
 In the top, click on the drop down menu at the START button. And select the configure startup projects.
-![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture3.PNG)
+![image](https://github.com/FaNzu/AcmeCorp/blob/main/READMEPicture3.png)
 
 and click on multiple startup projects, and start both 'AcmeCorp.Web.Api' and 'AcmeCorp.Web.Blazor'. click apply and ok
 
